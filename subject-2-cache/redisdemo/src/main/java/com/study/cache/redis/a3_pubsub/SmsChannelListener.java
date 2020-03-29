@@ -12,6 +12,8 @@ import javax.annotation.PostConstruct;
 
 /**
  * 接收短信通知，直接用客户端的方式
+ *
+ * 发布订阅模式 -> 消息会丢失
  */
 @Component
 @Profile("pubsub")

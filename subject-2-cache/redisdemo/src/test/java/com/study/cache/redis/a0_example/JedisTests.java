@@ -16,11 +16,12 @@ import java.util.Set;
 @ActiveProfiles("single") // 设置profile
 public class JedisTests {
 
-    // ------------------------ jedis 工具直连演示
     // jedis和redis命令名称匹配度最高，最为简洁，学习难度最低
 
-    // 列表~ 集合数据存储~ java.util.List，java.util.Stack
-    // 生产者消费者（简单MQ）
+    /**
+     * 列表~ 集合数据存储~ java.util.List，java.util.Stack
+     * 生产者消费者（简单MQ）
+     */
     @Test
     public void list() {
         Jedis jedis = new Jedis("192.168.100.241", 6379);
@@ -43,8 +44,10 @@ public class JedisTests {
         jedis.close();
     }
 
-    // 类似：在redis里面存储一个hashmap
-    // 推荐的方式，无特殊需求是，一般的缓存都用这个
+    /**
+     * 类似：在redis里面存储一个hashmap
+     * 推荐的方式，无特殊需求是，一般的缓存都用这个
+     */
     @Test
     public void hashTest() {
         HashMap<String, Object> user = new HashMap<>();
@@ -63,9 +66,9 @@ public class JedisTests {
         jedis.close();
     }
 
-    // 用set实现（交集 并集）
-    // 交集示例： 共同关注的好友
-    // 并集示例：
+    /**
+     * 用set实现（交集 并集）
+     */
     @Test
     public void setTest() {
         // 取出两个人共同关注的好友
@@ -73,14 +76,14 @@ public class JedisTests {
         // 每个人维护一个set
         jedis.sadd("user_A", "userC", "userD", "userE");
         jedis.sadd("user_B", "userC", "userE", "userF");
-        // 取出共同关注
+        // 取出共同关注（并集）
         Set<String> sinter = jedis.sinter("user_A", "user_B");
         System.out.println(sinter);
 
         // 检索给某一个帖子点赞/转发的
         jedis.sadd("trs_tp_1001", "userC", "userD", "userE");
         jedis.sadd("star_tp_1001", "userE", "userF");
-        // 取出共同人群
+        // 取出共同人群（交际）
         Set<String> union = jedis.sunion("star_tp_1001", "trs_tp_1001");
         System.out.println(union);
 

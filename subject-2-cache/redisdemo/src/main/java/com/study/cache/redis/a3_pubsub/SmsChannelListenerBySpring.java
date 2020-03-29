@@ -14,6 +14,7 @@ import java.util.*;
 
 /**
  * 接收短信通知
+ * PS. 可以在 redis_cli 中，通过 monitor 命令看到 sub/pub 记录
  */
 @Component
 @Profile("pubsub")

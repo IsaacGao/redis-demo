@@ -17,16 +17,16 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 @Profile("single")
-// 开启spring cache注解功能
+//开启注解缓存
 @EnableCaching
 class SingleRedisAppConfig {
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         System.out.println("使用单机版本");
-        return new LettuceConnectionFactory(new RedisStandaloneConfiguration("192.168.100.241", 6379));
+        return new LettuceConnectionFactory(new RedisStandaloneConfiguration("49.235.251.244", 6379));
     }
 
-    @Bean
+    @Bean("myRedisTemplate")
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate redisTemplate = new RedisTemplate();
         redisTemplate.setConnectionFactory(redisConnectionFactory);

@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 @Profile("single")
 public class SingleExampleService {
     // 直接注入StringRedisTemplate，则代表每一个操作参数都是字符串
+    //Ps: 如果 set 的值为对象，则按照配置里配置的对象进行序列化
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    // 参数可以是任何对象，默认由JDK序列化
+    // 参数可以是任何对象，默认由JDK序列化（configuration 配置的）
+    //Ps: 如果 set 的值为对象，则按照配置里配置的对象进行序列化
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -46,5 +48,4 @@ public class SingleExampleService {
         redisTemplate.opsForValue().set(userId, user);
         return user;
     }
-
 }

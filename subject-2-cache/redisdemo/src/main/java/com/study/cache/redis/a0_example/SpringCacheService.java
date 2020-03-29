@@ -13,9 +13,11 @@ public class SpringCacheService {
 
     /**
      * springcache注解版本（官方大部分资料开始往springboot方向引导，实际上不用springboot，也是差不多的方式）
+     *
+     * value 单独的缓存前缀
+     * key缓存key 可以用springEL表达式
+     * eg: userId = gzy  -> 则 redis 的 key 为 cache-1::gzy
      */
-    // value~单独的缓存前缀
-    // key缓存key 可以用springEL表达式
     @Cacheable(cacheManager = "cacheManager", value = "cache-1", key = "#userId")
     public User findUserById(String userId) throws Exception {
         // 读取数据库
@@ -29,7 +31,11 @@ public class SpringCacheService {
         System.out.println("用户从数据库删除成功，请检查缓存是否清除~~" + userId);
     }
 
-    // 如果数据库更新成功，更新redis缓存
+    /**
+     * 如果数据库更新成功，更新redis缓存
+     * key -> el 表达式，取 user 里的 userId
+     * condition -> 只有满足条件，才会更新缓存 (result notequal null)
+     */
     @CachePut(cacheManager = "cacheManager", value = "cache-1", key = "#user.userId", condition = "#result ne null")
     public User updateUser(User user) throws Exception {
         // 读取数据库

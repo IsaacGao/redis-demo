@@ -10,6 +10,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+
+/**
+ * 与 sub/pub 相比，stream 会在 sub 不在线时保留消息
+ */
 @Configuration
 @Profile("stream")
 class StreamRedisAppConfig {

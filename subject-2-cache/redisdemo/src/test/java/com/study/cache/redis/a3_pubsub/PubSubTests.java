@@ -32,7 +32,16 @@ public class PubSubTests {
         });
     }
 
-    // 隐藏功能~~黑科技~~当key被删除，或者key过期之后，也会有通知~
+    /**
+     * 隐藏功能~~黑科技~~当key被删除，或者key过期之后，也会有通知~
+     * http://redis.cn/topics/notifications.html
+     * https://redis.io/topics/notifications
+     * 可以订阅事件或者key
+     * 可以用来做订单超时未支付的实现
+     * - 监听删除消息可以知道具体的订单未支付
+     *
+     *  __keyspace@0  @0 是数据库下标 可以通过 select index 选择
+     */
     @Test
     public void test2() throws InterruptedException {
         redisTemplate.execute(new RedisCallback<Long>() {
